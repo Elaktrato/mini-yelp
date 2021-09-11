@@ -18,10 +18,14 @@ function App() {
   const [error, setError] = useState(false)
 
 
+const [selectedCity, setSelectedCity] = useState();
+const [selectedCuisine, setSelectedCuisine] = useState();
+
   const getData = async () => {
     let jsonResponse = []
     try {
-      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/restaurants`, { cache: 'no-cache' })
+      const queryString = "?city=" + selectedCity + "&cuisine=" + selectedCuisine
+      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/restaurants${queryString}`, { cache: 'no-cache' })
       console.log(response)
       if (response) {
         console.log("ARgh")
@@ -64,8 +68,10 @@ function App() {
     setCuisine(cuisines)
   }
 
-  const initialSearch = async () => {
+  const search = async () => {
     const currentSearch = await getData();
+    console.log(currentSearch)
+    console.log(currentSearch)
     setRestaurants(currentSearch)
   }
 
@@ -87,6 +93,16 @@ function App() {
   }
 
 
+const handleSelectChange = (selectName, newValue) => {
+  if(selectName === "city"){
+    setSelectedCity(newValue)
+  }
+  else if(selectName === "cuisine"){
+    setSelectedCuisine(newValue)
+  }
+  getData()
+}
+
   useEffect(() => {
     async function getLoc() {
       setLocationData(await getIp());
@@ -97,11 +113,15 @@ function App() {
     
       getLoc()
 
-      initialSearch();
+      search();
   }, []
   )
 
-
+useEffect(
+  () => {
+  search()
+  }, [selectedCity, selectedCuisine]
+)
 
 
   let mapcomponent;
@@ -115,6 +135,9 @@ function App() {
       cities={city}
       cuisine={cuisine}
       locationData={locationData}
+      selectedCity={selectedCity}
+      selectedCuisine={selectedCuisine}
+      handleSelectChange={handleSelectChange}
       />
     )
   }

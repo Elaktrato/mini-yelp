@@ -9,6 +9,8 @@ import 'leaflet/dist/leaflet.css';
 
 function Map (props) {
     
+    console.log("Mapprops")
+    console.log(props)
 
     let DefaultIcon = L.icon({
         iconUrl: icon,
@@ -38,6 +40,9 @@ function Map (props) {
             query={props.query} 
             cities={props.cities}
             cuisine={props.cuisine}
+            selectedCuisine={props.selectedCuisine}
+            selectedCity={props.selectedCity}
+            handleSelectChange={props.handleSelectChange}
         /></div>
 
         </div>

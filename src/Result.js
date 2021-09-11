@@ -3,8 +3,6 @@ import { NavLink } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 
 function Result (props) {
-        console.log("resultProps")
-        console.log(props)
 if(props.restaurant){
     return(
         <li className="contentRow" key="restaurant1">
