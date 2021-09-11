@@ -41,9 +41,15 @@ const [restaurantData, setRestaurantData] = useState({})
     console.log(restaurantData)
 
     return(
-        <div className="restaurantBody">
-            <div>
+        <div className="restaurantBody" key={`restaurantPage${restaurantData.id}`}>
+            <div className="presentImg">
                 <img src={`${restaurantData.picture}`} />        
+            </div>
+
+            <div className="restaurantText">
+                <h2>{restaurantData.name}</h2>
+                <div>Phone number: {restaurantData.phone}</div>
+                <div>Website: <a href={`https://${restaurantData.website}`} >{restaurantData.website}</a></div>
             </div>
         </div>
     )

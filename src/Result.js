@@ -17,9 +17,8 @@ if(props.restaurant){
                     className="title"
                     to={`/${props.restaurant.id}`}
                 >
-                    {props.restaurant.name}
+                <h3> {props.restaurant.name} </h3>
                 </NavLink>
-                <p className="cuisine">Cuisine: {props.restaurant.cuisine} </p>
                 <p className="cuisine">Phone: 17656972344 </p>
             </div>
         </li>

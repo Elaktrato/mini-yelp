@@ -124,6 +124,26 @@ label {
     margin-right: 10px;
 }
 
+.restaurantBody {
+    display: flex;
+}
+
+.presentImg {
+    overflow: hidden;
+    width: 50vw;
+}
+
+.presentImg img {
+    width: 50vw;
+}
+
+.restaurantText {
+    text-align: left;
+    padding: 1rem 3rem;
+    max-width: 50vw;
+    width: 40%;
+}
+
 @media(max-width:880px) {
     .searchfilters {
         flex-flow: column;
