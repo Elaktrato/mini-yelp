@@ -7,6 +7,8 @@ function Restaurant (props) {
 
     let {id} = useParams()
 
+const [restaurantData, setRestaurantData] = useState({})
+
     const getRestaurant = async () => {
         let jsonResponse = []
         try {
@@ -21,31 +23,34 @@ function Restaurant (props) {
           console.log(error);
           jsonResponse.error = error.message
         }
-        return jsonResponse
+        setRestaurantData(...jsonResponse)
       };
 
-
-      const restaurantData = () => {
-        getRestaurant()
-    }
 
 
       useEffect(() => {
         async function renderRestaurant() {
-          await restaurantData();
+          await getRestaurant();
           }
           renderRestaurant()
       }, []
 
     )
 
+    console.log("restaurantData")
+    console.log(restaurantData)
 
     return(
-        <div className="restaurantBody">
-            <div>
-                
+        <div className="restaurantBody" key={`restaurantPage${restaurantData.id}`}>
+            <div className="presentImg">
+                <img src={`${restaurantData.picture}`} />        
             </div>
-           {id} Do something
+
+            <div className="restaurantText">
+                <h2>{restaurantData.name}</h2>
+                <div>Phone number: {restaurantData.phone}</div>
+                <div>Website: <a target="_blank" href={`${restaurantData.website}`} >{restaurantData.website}</a></div>
+            </div>
         </div>
     )
 }

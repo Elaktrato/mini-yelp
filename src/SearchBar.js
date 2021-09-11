@@ -11,10 +11,12 @@ function SearchBar (props) {
             <div className="searchfilters">
                 <div className="filterSelect">
                     <label>City</label>
-                    <select name="cities" id="citiesSelect" className="inputField">
-                        <option>Anywhere</option>
+                    <select 
+                    onChange={(event) => props.handleSelectChange("city",event.target.value)} 
+                    value={props.selectedCity} name="cities" id="citiesSelect" className="inputField">
+                        <option value={0}>Anywhere</option>
                         {props.cities.map((city) => {
-                        return (<option>{city.name}</option>)
+                        return (<option value={city.name} >{city.name}</option>)
                         })}
                     </select>
                 </div>
@@ -22,19 +24,14 @@ function SearchBar (props) {
                 
                 <div className="filterSelect">
                     <label>Cuisine</label>
-                    <select name="cities" id="cuisineSelect" className="inputField">
-                        <option>All</option>
+                    <select onChange={(event) => props.handleSelectChange("cuisine",event.target.value)} value={props.selectedCuisine} name="cities" id="cuisineSelect" className="inputField">
+                        <option value={0}>All</option>
                         {props.cuisine.map((cuisine) => {
-                            return (<option>{cuisine.name}</option>)
+                            return (<option value={cuisine.name} >{cuisine.name}</option>)
                         })}
                     </select>
                 </div>
 
-            <button 
-                // onClick={() => props.getData()}
-            >
-                Search
-            </button>
             </div>
         </header>
     )

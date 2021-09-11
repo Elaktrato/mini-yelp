@@ -18,10 +18,41 @@ function App() {
   const [error, setError] = useState(false)
 
 
+const [selectedCity, setSelectedCity] = useState("0");
+const [selectedCuisine, setSelectedCuisine] = useState("0");
+
   const getData = async () => {
     let jsonResponse = []
     try {
-      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/restaurants`, { cache: 'no-cache' })
+      const queryString = "?city=" + selectedCity + "&cuisine=" + selectedCuisine
+
+      console.log("Luis console here...")
+      console.log(typeof(selectedCity))
+      console.log(selectedCuisine)
+
+
+      //added by LH
+
+      let response="";
+
+
+      if((selectedCity!=="0") && (selectedCuisine!=="0") ) {
+        console.log("luis is wokring  both")
+        response = await fetch(`https://mini-yelp-backend-luish.herokuapp.com/filters/${queryString}`, { cache: 'no-cache' })
+      } else if((selectedCity!=="0")&&(selectedCuisine==="0" )){
+        response = await fetch(`https://mini-yelp-backend-luish.herokuapp.com/restaurants/cities/${selectedCity}`, { cache: 'no-cache' })
+      }else if((selectedCity==="0")&&(selectedCuisine!=="0")){
+        response = await fetch(`https://mini-yelp-backend-luish.herokuapp.com/restaurants/cuisine/${selectedCuisine}`, { cache: 'no-cache' })
+      }else{
+        response = await fetch(`https://mini-yelp-backend-luish.herokuapp.com/restaurants/`, { cache: 'no-cache' })
+      }
+
+      // End of addition 
+
+
+      //let response = await fetch(`http://mini-yelp-backend-luish.herokuapp.com/restaurants${queryString}`, { cache: 'no-cache' })
+      //let response = await fetch(`http://localhost:3000/filters/${queryString}`, { cache: 'no-cache' })
+
       console.log(response)
       if (response) {
         console.log("ARgh")
@@ -64,8 +95,10 @@ function App() {
     setCuisine(cuisines)
   }
 
-  const initialSearch = async () => {
+  const search = async () => {
     const currentSearch = await getData();
+    console.log(currentSearch)
+    console.log(currentSearch)
     setRestaurants(currentSearch)
   }
 
@@ -87,6 +120,16 @@ function App() {
   }
 
 
+const handleSelectChange = (selectName, newValue) => {
+  if(selectName === "city"){
+    setSelectedCity(newValue)
+  }
+  else if(selectName === "cuisine"){
+    setSelectedCuisine(newValue)
+  }
+  getData()
+}
+
   useEffect(() => {
     async function getLoc() {
       setLocationData(await getIp());
@@ -97,11 +140,15 @@ function App() {
     
       getLoc()
 
-      initialSearch();
+      search();
   }, []
   )
 
-
+useEffect(
+  () => {
+  search()
+  }, [selectedCity, selectedCuisine]
+)
 
 
   let mapcomponent;
@@ -115,6 +162,9 @@ function App() {
       cities={city}
       cuisine={cuisine}
       locationData={locationData}
+      selectedCity={selectedCity}
+      selectedCuisine={selectedCuisine}
+      handleSelectChange={handleSelectChange}
       />
     )
   }
