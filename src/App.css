@@ -119,3 +119,21 @@
     width: 30vw;
     object-fit: fill;
 }
+
+label {
+    margin-right: 10px;
+}
+
+@media(max-width:880px) {
+    .searchfilters {
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .searchfilters .filterSelect {
+        margin-top: 0.4rem;
+    }
+    button {
+        margin-top: 1rem;
+    }
+}
