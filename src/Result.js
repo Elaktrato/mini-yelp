@@ -9,7 +9,7 @@ if(props.restaurant){
     return(
         <li className="contentRow" key="restaurant1">
             <div className="restaurantImg">
-                <img src="https://ik.imagekit.io/bwcdq46tkc8/mini-yelp/tasteOfTropics-restaurant_x1QbKwyjJN.jfif?updatedAt=1631309125693" />
+                <img src={`${props.restaurant.picture}`} />
             </div>
             
             <div className="restaurantInfo">
@@ -17,7 +17,7 @@ if(props.restaurant){
                     className="title"
                     to={`/${props.restaurant.id}`}
                 >
-                    Taste The Tropics Ice Cream
+                    {props.restaurant.name}
                 </NavLink>
                 <p className="cuisine">Cuisine: {props.restaurant.cuisine} </p>
                 <p className="cuisine">Phone: 17656972344 </p>
