@@ -19,11 +19,7 @@ function SearchBar (props) {
             <p className="headTitle">Mini-Yelp</p>
             </div>
             <select className="inputField">
-                {props.cities.map((city) => {
-                    return <option>{props.cities.name}</option>
-                })
-
-                }
+                
             </select>
             <button 
                 onClick={() => props.getData()}

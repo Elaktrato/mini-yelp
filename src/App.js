@@ -11,15 +11,10 @@ function App() {
     ""
   );
 
+  const [locationData, setLocationData] = useState("")
   const [cuisine, setCuisine] = useState("");
   const [city, setCity] = useState("");
-
-  useEffect(() => {
-    initialSearch();
-    getCities();
-    getCuisines();
-  }, []
-  )
+  const [loadingIp, setLoadingIp] = useState(true)
 
   const getData = async () => {
     let jsonResponse = {error: "unknown"}
@@ -74,15 +69,57 @@ function App() {
     setRestaurants(currentSearch)
   }
 
-  return (
-    <div className="App">
+  const getIp = async () => {
+    let ipUrl = "https://geo.ipify.org/api/v1?apiKey=";
+    let ipApiKey = "at_VF7kJXfX3dBVqla8cpVBLGmfQO3cg";
+    let currentIpInfo = {error: "unknown"};
+    try {
+      const response = await fetch(ipUrl + ipApiKey)
+      if(response.ok) {
+        currentIpInfo = await response.json()
+      }else{
+        return currentIpInfo
+      }
+    } catch(error) {
+      currentIpInfo.error = error.message
+    }
+    return currentIpInfo
+  }
+
+
+  useEffect(() => {
+
+    async function getLoc() {
+      setLocationData(await getIp());
+      console.log(locationData);
+      setLoadingIp(false);
+      }
+    
+      getLoc()
+
+    initialSearch();
+    getCities();
+    getCuisines();
+  }, []
+  )
+
+  let mapcomponent;
+  if(loadingIp){
+    return ""
+  }else if(!loadingIp){
+    return (
       <Map 
       getData={getData()}
       query={restaurants} 
       cities={city}
       cuisine={cuisine}
-      />
-      
+      locationData={locationData}
+      />)
+  }
+
+  return (
+    <div className="App">
+      {mapcomponent}
   <BrowserRouter>
     <Switch>
       <Route exact path="/" >

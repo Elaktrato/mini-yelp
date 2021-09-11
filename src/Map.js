@@ -17,10 +17,13 @@ function Map (props) {
     
     L.Marker.prototype.options.icon = DefaultIcon;
 
-    return(
-        <div className="mapBackground">
-         <MapContainer
+    const locationData = props.locationData.location;
+    const centerLoc = [locationData.lat, locationData.lng];
+    return (
+        <div>
+        <MapContainer
             style={{ height: "100vh", width: "100vw" }}
+            center={centerLoc}
             zoom={13}
             scrollWheelZoom={false}
         >
@@ -28,13 +31,13 @@ function Map (props) {
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-        </MapContainer>
             <SearchBar
                 getData={props.getData}
                 query={props.query} 
                 cities={props.cities}
                 cuisine={props.cuisine}
             />
+        </MapContainer>
         </div>
     )
 }
