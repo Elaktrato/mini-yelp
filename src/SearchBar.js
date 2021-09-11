@@ -18,20 +18,18 @@ function SearchBar (props) {
             <div>
             <p className="headTitle">Mini-Yelp</p>
             </div>
-            <div className="searchbar">
-            <input className="inputField" 
-                // onChange={handleChange} 
-                // onKeyPress={handleEnterSubmit} 
-                id="searchField" 
-                type="search"
-                // value={searchTerm}
-            />
+            <select className="inputField">
+                {props.cities.map((city) => {
+                    return <option>{props.cities.name}</option>
+                })
+
+                }
+            </select>
             <button 
-            //  onClick={() => props.getData(searchTerm)}
+                onClick={() => props.getData()}
             >
                 Search
             </button>
-            </div>
         </header>
     )
 }

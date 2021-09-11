@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import SearchBar from "./SearchBar";
+import { MapContainer, Marker, TileLayer } from "react-leaflet";
 
 function Map (props) {
     
@@ -19,7 +20,12 @@ function Map (props) {
                 <Card locationData={props.locationData} closeCard={handleClick} />
             )}
         </MapContainer> */}
-            <SearchBar />
+            <SearchBar
+                getData={props.getData}
+                query={props.query} 
+                cities={props.cities}
+                cuisine={props.cuisine}
+            />
         </div>
     )
 }

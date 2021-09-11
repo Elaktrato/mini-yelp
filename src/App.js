@@ -7,21 +7,24 @@ import Restaurant from "./Restaurant"
 
 function App() {
 
-  const [searchResults, setSearchResults] = useState(
+  const [restaurants, setRestaurants] = useState(
     ""
   );
 
   const [cuisine, setCuisine] = useState("");
   const [city, setCity] = useState("");
 
-  useEffect(
-    () => initialSearch(searchResults.query || ''), []
+  useEffect(() => {
+    initialSearch();
+    getCities();
+    getCuisines();
+  }, []
   )
 
-  const getData = async (searchQuery) => {
+  const getData = async () => {
     let jsonResponse = {error: "unknown"}
     try {
-      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/restaurants${cuisine}${city}`, { cache: 'no-cache' })
+      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/restaurants`, { cache: 'no-cache' })
       response = await response.json()
       console.log(response)
       if (response.ok) {
@@ -34,17 +37,50 @@ function App() {
     return jsonResponse
   }
 
-  
+  const getCities = async () => {
+    let jsonResponse = {error: "unknown"}
+    try {
+      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/cities/`, { cache: 'no-cache' })
+      response = await response.json()
+      console.log(response)
+      if (response.ok) {
+        jsonResponse = await response.json()
+      }
+    } catch (error) {
+      console.log(error);
+      jsonResponse.error = error.message
+    }
+    setCity(jsonResponse)
+  }
+
+  const getCuisines = async () => {
+    let jsonResponse = {error: "unknown"}
+    try {
+      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/cuisine/`, { cache: 'no-cache' })
+      response = await response.json()
+      console.log(response)
+      if (response.ok) {
+        jsonResponse = await response.json()
+      }
+    } catch (error) {
+      console.log(error);
+      jsonResponse.error = error.message
+    }
+    setCuisine(jsonResponse)
+  }
 
   const initialSearch = async (searchQuery) => {
     const currentSearch = await getData(searchQuery);
-    setSearchResults(currentSearch)
+    setRestaurants(currentSearch)
   }
 
   return (
     <div className="App">
       <Map 
-      // query={restaurants} 
+      getData={getData()}
+      query={restaurants} 
+      cities={city}
+      cuisine={cuisine}
       />
       
   <BrowserRouter>
