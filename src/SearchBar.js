@@ -11,7 +11,9 @@ function SearchBar (props) {
             <div className="searchfilters">
                 <div className="filterSelect">
                     <label>City</label>
-                    <select onChange={(event) => props.handleSelectChange("city",event.target.value)} value={props.selectedCity} name="cities" id="citiesSelect" className="inputField">
+                    <select 
+                    onChange={(event) => props.handleSelectChange("city",event.target.value)} 
+                    value={props.selectedCity} name="cities" id="citiesSelect" className="inputField">
                         <option>Anywhere</option>
                         {props.cities.map((city) => {
                         return (<option value={city.name} >{city.name}</option>)

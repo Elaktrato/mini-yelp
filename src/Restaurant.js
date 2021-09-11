@@ -49,7 +49,7 @@ const [restaurantData, setRestaurantData] = useState({})
             <div className="restaurantText">
                 <h2>{restaurantData.name}</h2>
                 <div>Phone number: {restaurantData.phone}</div>
-                <div>Website: <a href={`https://${restaurantData.website}`} >{restaurantData.website}</a></div>
+                <div>Website: <a target="_blank" href={`${restaurantData.website}`} >{restaurantData.website}</a></div>
             </div>
         </div>
     )

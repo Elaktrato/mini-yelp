@@ -17,7 +17,7 @@ if(props.restaurant){
                 >
                 <h3> {props.restaurant.name} </h3>
                 </NavLink>
-                <p className="cuisine">Phone: 17656972344 </p>
+                <p className="cuisine">Phone: {props.restaurant.phone} </p>
             </div>
         </li>
     )}else {

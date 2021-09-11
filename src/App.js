@@ -25,7 +25,7 @@ const [selectedCuisine, setSelectedCuisine] = useState();
     let jsonResponse = []
     try {
       const queryString = "?city=" + selectedCity + "&cuisine=" + selectedCuisine
-      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/restaurants${queryString}`, { cache: 'no-cache' })
+      let response = await fetch(`https://mini-yelp-backend-luish.herokuapp.com/restaurants${queryString}`, { cache: 'no-cache' })
       console.log(response)
       if (response) {
         console.log("ARgh")
