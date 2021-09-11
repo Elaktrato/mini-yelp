@@ -20,7 +20,7 @@ function Map (props) {
     const locationData = props.locationData.location;
     const centerLoc = [locationData.lat, locationData.lng];
     return (
-        <div>
+        <div className="mapContainer">
         <MapContainer
             style={{ height: "100vh", width: "100vw" }}
             center={centerLoc}
@@ -31,13 +31,15 @@ function Map (props) {
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <SearchBar
-                getData={props.getData}
-                query={props.query} 
-                cities={props.cities}
-                cuisine={props.cuisine}
-            />
         </MapContainer>
+        <div className="searchContainer">
+        <SearchBar
+            getData={props.getData}
+            query={props.query} 
+            cities={props.cities}
+            cuisine={props.cuisine}
+        /></div>
+
         </div>
     )
 }

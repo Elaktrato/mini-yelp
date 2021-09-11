@@ -3,7 +3,7 @@ import React, {useState, useEffect} from "react";
 import Main from "./Main";
 import Map from "./Map";
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Restaurant from "./Restaurant"
+import Restaurant from "./Restaurant";
 
 function App() {
 
@@ -12,17 +12,20 @@ function App() {
   );
 
   const [locationData, setLocationData] = useState("")
-  const [cuisine, setCuisine] = useState("");
-  const [city, setCity] = useState("");
-  const [loadingIp, setLoadingIp] = useState(true)
+  const [cuisine, setCuisine] = useState([]);
+  const [city, setCity] = useState([]);
+  const [loadingIp, setLoadingIp] = useState(true);
+  const [error, setError] = useState(false)
+
 
   const getData = async () => {
-    let jsonResponse = {error: "unknown"}
+    let jsonResponse = []
     try {
       let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/restaurants`, { cache: 'no-cache' })
-      response = await response.json()
       console.log(response)
-      if (response.ok) {
+      if (response) {
+        console.log("ARgh")
+        console.log(jsonResponse)
         jsonResponse = await response.json()
       }
     } catch (error) {
@@ -33,39 +36,36 @@ function App() {
   }
 
   const getCities = async () => {
-    let jsonResponse = {error: "unknown"}
+    let cities = []
     try {
       let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/cities/`, { cache: 'no-cache' })
-      response = await response.json()
-      console.log(response)
       if (response.ok) {
-        jsonResponse = await response.json()
+        cities = await response.json()
       }
     } catch (error) {
-      console.log(error);
-      jsonResponse.error = error.message
+      cities.error = error.message
     }
-    setCity(jsonResponse)
+    setCity(cities)
   }
 
   const getCuisines = async () => {
-    let jsonResponse = {error: "unknown"}
+    let cuisines = [];
     try {
-      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/cuisine/`, { cache: 'no-cache' })
-      response = await response.json()
-      console.log(response)
+      let response = await fetch(`https://mini-yelp-backend1.herokuapp.com/cuisines/`, { cache: 'no-cache' })
+      console.log("CUISINES");
+      console.log(response);
       if (response.ok) {
-        jsonResponse = await response.json()
+        cuisines = await response.json()
       }
     } catch (error) {
       console.log(error);
-      jsonResponse.error = error.message
+      cuisines.error = error.message
     }
-    setCuisine(jsonResponse)
+    setCuisine(cuisines)
   }
 
-  const initialSearch = async (searchQuery) => {
-    const currentSearch = await getData(searchQuery);
+  const initialSearch = async () => {
+    const currentSearch = await getData();
     setRestaurants(currentSearch)
   }
 
@@ -88,51 +88,54 @@ function App() {
 
 
   useEffect(() => {
-
     async function getLoc() {
       setLocationData(await getIp());
-      console.log(locationData);
       setLoadingIp(false);
+      getCities();
+      getCuisines();
       }
     
       getLoc()
 
-    initialSearch();
-    getCities();
-    getCuisines();
+      initialSearch();
   }, []
   )
 
+
+
+
   let mapcomponent;
   if(loadingIp){
-    return ""
+    mapcomponent = <div className="mapPlaceholder"></div>
   }else if(!loadingIp){
-    return (
+    mapcomponent = (
       <Map 
-      getData={getData()}
+      getData={getData}
       query={restaurants} 
       cities={city}
       cuisine={cuisine}
       locationData={locationData}
-      />)
+      />
+    )
   }
 
   return (
     <div className="App">
       {mapcomponent}
-  <BrowserRouter>
-    <Switch>
-      <Route exact path="/" >
-        <Main />
-      </Route>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" >
+          <Main 
+          restaurants={restaurants} 
+          />
+        </Route>
       
-      <Route path="/:id" >
-        <Restaurant />
-      </Route>
-    </Switch>
-  </BrowserRouter>
+        <Route path="/:id" >
+          <Restaurant />
+        </Route>
+      </Switch>
+    </BrowserRouter>
     </div>
   );
 }
-
 export default App;

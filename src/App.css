@@ -45,14 +45,48 @@
     background-color: #edeeed;
 }
 
+.mapContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+}
+
+.mapPlaceholder {
+    height: 60vh;
+    background-color: #edeeed;
+}
+
 .searchbar {
     padding-bottom: 2rem;
 }
 
+.headTitle {
+    margin-top: 0;
+}
+
+.searchfilters {
+    display: flex;
+    flex-flow: revert;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 45vw;
+    align-items: end;
+}
+
+.searchContainer {
+    display: flex;
+    padding: 2rem;
+    background-color: #FFF;
+    border-radius: 1rem;
+}
+
 .restaurantImg {
     background-color: #edeeed;
-    width: 7rem;
-    height: 7rem;
+    min-width: 7rem;
+    min-height: 7rem;
+    max-width: 30vw;
+    max-height: 20vw;
 }
 
 .restaurantInfo {
@@ -66,4 +100,11 @@
 .contentRow {
     list-style: none;
     display: flex;
+}
+
+.leaflet-container {
+    height: 60vh !important;
+    position: absolute;
+    z-index: -1;
+    top: 0;
 }

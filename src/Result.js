@@ -1,39 +1,31 @@
 import React from 'react';
-import { Route, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
-function Result ({result, query}) {
-    // let title = result.title || result.story_title
-    // const toCappitalCase = function(txt) {
-    //     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    //   }
-
-    // if (title && query) {
-    //     title = title.replaceAll(query.toLowerCase(), "<mark>"+query.toLowerCase()+"</mark>")
-    //     title = title.replaceAll(query.toUpperCase(), "<mark>"+query.toUpperCase()+"</mark>")
-    //     title = title.replaceAll(toCappitalCase(query), "<mark>"+toCappitalCase(query)+"</mark>")
-    // }
-    
-    // const modifiedTitle = {
-    //     __html:title
-    // }
-        
+function Result (props) {
+        console.log("resultProps")
+        console.log(props)
+if(props.restaurant){
     return(
-        <li className="contentRow">
+        <li className="contentRow" key="restaurant1">
             <div className="restaurantImg">
-                <img />
+                <img src="https://ik.imagekit.io/bwcdq46tkc8/mini-yelp/tasteOfTropics-restaurant_x1QbKwyjJN.jfif?updatedAt=1631309125693" />
             </div>
             
             <div className="restaurantInfo">
                 <NavLink 
                     className="title"
-                    to="/example"
+                    to={`/${props.restaurant.id}`}
                 >
-                    example
+                    Taste The Tropics Ice Cream
                 </NavLink>
-                <p className="cuisine"> Italian </p>
+                <p className="cuisine">Cuisine: {props.restaurant.cuisine} </p>
+                <p className="cuisine">Phone: 17656972344 </p>
             </div>
         </li>
-    )
+    )}else {
+        return "loading..."
+    }
 }
 
 export default Result
