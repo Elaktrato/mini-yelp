@@ -34,7 +34,7 @@ function App() {
     return jsonResponse
   }
 
-  asd
+  
 
   const initialSearch = async (searchQuery) => {
     const currentSearch = await getData(searchQuery);
